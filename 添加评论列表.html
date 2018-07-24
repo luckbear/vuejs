@@ -12,7 +12,7 @@
 
 <body>
     <div class="commentList">
-        <mycom>
+        <mycom @func = "loadFromStor">
 
         </mycom>
         <ul class="list-group">
@@ -27,17 +27,15 @@
 
 <template id="addComment">
     <div>
-        <form class="form-inline">
-            <div class="form-group">
-                <label>用户名</label>
-                <input type="text" class="form-control" placeholder="用户名" v-model="user">
-            </div>
-            <div class="form-group">
-                <label>评论内容</label>
-                <input type="textarea" class="form-control" placeholder="评论内容" v-model="comment">
-            </div>
-            <button class="btn btn-primary" @click="add">确定</button>
-        </form>
+        <div class="form-group">
+            <label>用户名</label>
+            <input type="text" class="form-control" placeholder="用户名" v-model="user">
+        </div>
+        <div class="form-group">
+            <label>评论内容</label>
+            <input type="textarea" class="form-control" placeholder="评论内容" v-model="comment">
+        </div>
+        <button class="btn btn-primary" @click="add">确定</button>
     </div>
 </template>
 
@@ -59,9 +57,11 @@
                     comment: this.comment
                 };
                 list.unshift(item);
-                localStorage.setItem('localCom', JSON.stringify(list))
+                localStorage.setItem('localCom', JSON.stringify(list));
+                this.user=this.comment='';
+                this.$emit('func');
             }
-        }
+        },
     }
     var app = new Vue({
         el: '.commentList',
